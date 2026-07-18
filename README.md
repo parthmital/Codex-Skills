@@ -310,47 +310,49 @@ General skill workflow:
 
 ```text
 .
-  .prettierrc.json
-  README.md
-  frontend-design/
-    SKILL.md
-    agents/
-      openai.yaml
-  internet-research/
-    SKILL.md
-    agents/
-      openai.yaml
-  ipynb-guardian/
-    README.md
-    SKILL.md
-    agents/
-      openai.yaml
-    references/
-      precommit.md
-    scripts/
-      notebook_doctor.py
-  readme-generator/
-    SKILL.md
-    agents/
-      openai.yaml
-  software-architecture/
-    SKILL.md
-    agents/
-      openai.yaml
+|-- .gitattributes
+|-- .prettierrc.json
+|-- README.md
+|-- frontend-design/
+|   |-- SKILL.md
+|   `-- agents/
+|       `-- openai.yaml
+|-- internet-research/
+|   |-- SKILL.md
+|   `-- agents/
+|       `-- openai.yaml
+|-- ipynb-guardian/
+|   |-- README.md
+|   |-- SKILL.md
+|   |-- agents/
+|   |   `-- openai.yaml
+|   |-- references/
+|   |   `-- precommit.md
+|   `-- scripts/
+|       `-- notebook_doctor.py
+|-- readme-generator/
+|   |-- SKILL.md
+|   `-- agents/
+|       `-- openai.yaml
+`-- software-architecture/
+    |-- SKILL.md
+    `-- agents/
+        `-- openai.yaml
 ```
 
 Important paths:
 
-1. `.prettierrc.json`: formatter preferences for tabs and tab width.
-2. `frontend-design/SKILL.md`: frontend design workflow and design quality rules.
-3. `internet-research/SKILL.md`: internet research workflow and source quality rules.
-4. `ipynb-guardian/SKILL.md`: notebook safety workflow and completion checklist.
-5. `ipynb-guardian/README.md`: short install and smoke test notes for the notebook skill.
-6. `ipynb-guardian/references/precommit.md`: optional notebook repository protection notes.
-7. `ipynb-guardian/scripts/notebook_doctor.py`: command line notebook maintenance utility.
-8. `readme-generator/SKILL.md`: README generation workflow and validation rules.
-9. `software-architecture/SKILL.md`: software architecture planning, review, ADR, and validation workflow.
-10. `*/agents/openai.yaml`: agent display and invocation metadata for each skill.
+1. `.gitattributes`: Git text file normalisation rules.
+2. `.prettierrc.json`: formatter preferences for tabs and tab width.
+3. `frontend-design/SKILL.md`: frontend design workflow and design quality rules.
+4. `internet-research/SKILL.md`: internet research workflow and source quality rules.
+5. `ipynb-guardian/SKILL.md`: notebook safety workflow and completion checklist.
+6. `ipynb-guardian/README.md`: short install and smoke test notes for the notebook skill.
+7. `ipynb-guardian/references/precommit.md`: optional notebook repository protection notes.
+8. `ipynb-guardian/scripts/notebook_doctor.py`: command line notebook maintenance utility.
+9. `readme-generator/SKILL.md`: README generation workflow and validation rules.
+10. `software-architecture/SKILL.md`: software architecture planning, review, ADR, and validation workflow.
+11. `*/agents/openai.yaml`: agent display and invocation metadata for each skill.
 
 ## Prerequisites
 
