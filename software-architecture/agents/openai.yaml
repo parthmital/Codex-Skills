@@ -1,0 +1,6 @@
+interface:
+  display_name: "Software Architecture"
+  short_description: "Software architecture planning"
+  default_prompt: "Use $software-architecture to plan or review this software architecture."
+policy:
+  allow_implicit_invocation: true

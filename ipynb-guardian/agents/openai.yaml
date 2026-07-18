@@ -1,0 +1,6 @@
+interface:
+  display_name: "IPYNB Guardian"
+  short_description: "Safe Jupyter notebook editing"
+  default_prompt: "Use $ipynb-guardian to safely inspect, edit, and validate this notebook."
+policy:
+  allow_implicit_invocation: true
