@@ -1,6 +1,6 @@
 ---
 name: readme-generator
-description: Generate or update a complete repository README.md by inspecting the codebase and documenting verified setup, scripts, APIs, environment variables, testing, deployment, metrics, troubleshooting, and security notes. Use automatically when the user asks to create, generate, write, rewrite, improve, refresh, audit, or update a repository README or project README.md for a software project.
+description: Generate, rewrite, audit, or update a repository README.md by inspecting the codebase and documenting verified setup, scripts, APIs, environment variables, testing, deployment, architecture, troubleshooting, security notes, and maintenance guidance. Use automatically when the user asks to create, generate, write, rewrite, improve, refresh, fix, audit, or update a project README, repository documentation, setup guide, developer onboarding guide, or README quality review for a software project.
 ---
 
 # README Generator
@@ -21,11 +21,11 @@ Write the README so it is:
 - Based only on facts available in the repository
 - Free from invented features, commands, metrics, URLs, credentials, or configuration values
 
-If a `README.md` already exists, replace it with the improved version while preserving accurate project-specific information that remains useful.
+If a `README.md` already exists, update or replace it as needed while preserving accurate project-specific information that remains useful. Remove stale, unverifiable, duplicated, or misleading claims.
 
 ## Repository Inspection
 
-First, inspect the complete repository before drafting the README. Review:
+First, inspect the repository before drafting the README. Build a fact ledger from files and command output so claims can be traced back to evidence. Review:
 
 - Source code
 - Configuration files
@@ -42,9 +42,9 @@ First, inspect the complete repository before drafting the README. Review:
 
 Use this analysis to ensure that the README accurately represents the current project.
 
-## Required Sections
+## Candidate Sections
 
-Include the following sections where they are relevant:
+Include the following sections where they are relevant and supported by repository evidence:
 
 1. Project title
 2. Table of contents
@@ -85,7 +85,7 @@ Include the following sections where they are relevant:
 37. Licence
 38. Support and contact information
 
-Do not include a section merely to satisfy this list. If a section is not applicable, either omit it or state why it is not applicable.
+Do not include a section merely to satisfy this list. If a section is not applicable, omit it unless the absence itself is useful to readers.
 
 ## Quick Start
 
@@ -152,7 +152,7 @@ Use only routes, payloads, status codes, and validation rules that can be verifi
 
 ## Repository Metrics
 
-Quantify every value that can be verified from the repository. This may include:
+Quantify values that help readers understand the repository and can be verified from files or commands. This may include:
 
 - Number of features
 - Number of modules
@@ -175,7 +175,7 @@ Quantify every value that can be verified from the repository. This may include:
 - File size limits
 - Rate limits
 
-Do not estimate or invent metrics. If a metric cannot be verified, state exactly:
+Do not estimate or invent metrics. If a requested or important metric cannot be verified, state exactly:
 
 ```text
 Not measured in the current repository.

@@ -18,7 +18,9 @@ try:
     import nbformat
     from nbformat.validator import NotebookValidationError
 except ImportError as exc:
-    raise SystemExit("Missing dependency: install with `python -m pip install nbformat`.") from exc
+    raise SystemExit(
+        "Missing dependency: install with `python -m pip install nbformat`."
+    ) from exc
 
 
 def load_notebook(path: Path):
@@ -55,7 +57,9 @@ def source_text(cell: Any) -> str:
 def inspect_notebook(path: Path) -> int:
     nb = load_notebook(path)
     ids = [cell.get("id") for cell in nb.cells]
-    counts = [cell.get("execution_count") for cell in nb.cells if cell.cell_type == "code"]
+    counts = [
+        cell.get("execution_count") for cell in nb.cells if cell.cell_type == "code"
+    ]
     numeric_counts = [value for value in counts if isinstance(value, int)]
     output_bytes = 0
     error_outputs = 0
@@ -67,11 +71,16 @@ def inspect_notebook(path: Path) -> int:
         if cell.cell_type == "code":
             code_cells += 1
             for output in cell.get("outputs", []):
-                output_bytes += len(json.dumps(output, ensure_ascii=False).encode("utf-8"))
+                output_bytes += len(
+                    json.dumps(output, ensure_ascii=False).encode("utf-8")
+                )
                 if output.get("output_type") == "error":
                     error_outputs += 1
             src = source_text(cell)
-            if any(token in src for token in ("globals()", "locals()", "exec(", "eval(", "%run ")):
+            if any(
+                token in src
+                for token in ("globals()", "locals()", "exec(", "eval(", "%run ")
+            ):
                 warnings.append(f"cell {index}: dynamic or hidden-state construct")
         elif cell.cell_type == "markdown":
             markdown_cells += 1
@@ -86,7 +95,9 @@ def inspect_notebook(path: Path) -> int:
     print(f"Kernel: {nb.metadata.get('kernelspec', {}).get('name', 'unspecified')}")
     print(f"Outputs: {output_bytes / 1024:.1f} KiB, {error_outputs} error output(s)")
     print(f"Cell IDs: {missing_ids} missing, {len(duplicates)} duplicate value(s)")
-    print(f"Execution counts: {'non-monotonic or repeated' if non_monotonic else 'monotonic/empty'}")
+    print(
+        f"Execution counts: {'non-monotonic or repeated' if non_monotonic else 'monotonic/empty'}"
+    )
     if "widgets" in nb.metadata:
         print("Widget state: present")
     if duplicates:
@@ -184,14 +195,18 @@ def semantic_lines(path: Path) -> list[str]:
         source = source_text(cell)
         lines.extend(line + "\n" for line in source.splitlines())
         if cell.cell_type == "code":
-            lines.append(f"[outputs={len(cell.get('outputs', []))}, execution_count={cell.get('execution_count')}]\n")
+            lines.append(
+                f"[outputs={len(cell.get('outputs', []))}, execution_count={cell.get('execution_count')}]\n"
+            )
     return lines
 
 
 def diff_notebooks(before: Path, after: Path) -> int:
     diff = difflib.unified_diff(
-        semantic_lines(before), semantic_lines(after),
-        fromfile=str(before), tofile=str(after)
+        semantic_lines(before),
+        semantic_lines(after),
+        fromfile=str(before),
+        tofile=str(after),
     )
     text = "".join(diff)
     print(text or "No semantic differences.")

@@ -1,310 +1,117 @@
 # Codex Skills
 
-## Table of Contents
+## Table Of Contents
 
 1. [Quick Start](#quick-start)
 2. [Project Overview](#project-overview)
-3. [Problem Statement](#problem-statement)
-4. [Project Goals](#project-goals)
-5. [Key Features](#key-features)
-6. [Supported Use Cases](#supported-use-cases)
-7. [System Architecture](#system-architecture)
-8. [Application Workflow](#application-workflow)
-9. [Technology Stack](#technology-stack)
-10. [Repository Structure](#repository-structure)
-11. [Prerequisites](#prerequisites)
-12. [Local Installation](#local-installation)
-13. [Dependency Installation](#dependency-installation)
-14. [Environment Configuration](#environment-configuration)
-15. [Database Setup](#database-setup)
-16. [Running The Project](#running-the-project)
-17. [Available Scripts And Commands](#available-scripts-and-commands)
-18. [API Documentation](#api-documentation)
-19. [Authentication And Authorisation](#authentication-and-authorisation)
-20. [Input Validation](#input-validation)
-21. [Error Handling](#error-handling)
-22. [Logging](#logging)
-23. [Testing](#testing)
-24. [Code Quality Checks](#code-quality-checks)
-25. [Build Process](#build-process)
-26. [Production Deployment](#production-deployment)
-27. [CI Or CD Process](#ci-or-cd-process)
-28. [Repository Metrics](#repository-metrics)
-29. [Security Considerations](#security-considerations)
-30. [Performance Considerations](#performance-considerations)
-31. [Monitoring And Maintenance](#monitoring-and-maintenance)
-32. [Troubleshooting](#troubleshooting)
-33. [Known Limitations](#known-limitations)
-34. [Contribution Guidelines](#contribution-guidelines)
-35. [Coding Standards](#coding-standards)
-36. [Licence](#licence)
-37. [Support And Contact Information](#support-and-contact-information)
+3. [Skills In This Repository](#skills-in-this-repository)
+4. [Repository Structure](#repository-structure)
+5. [Technology Stack](#technology-stack)
+6. [Prerequisites](#prerequisites)
+7. [Local Installation](#local-installation)
+8. [Dependency Installation](#dependency-installation)
+9. [Running Commands](#running-commands)
+10. [Notebook Utility](#notebook-utility)
+11. [Environment Configuration](#environment-configuration)
+12. [Input Validation And Error Handling](#input-validation-and-error-handling)
+13. [Testing And Verification](#testing-and-verification)
+14. [Code Quality Checks](#code-quality-checks)
+15. [Build, Deployment, And CI](#build-deployment-and-ci)
+16. [Repository Metrics](#repository-metrics)
+17. [Security Notes](#security-notes)
+18. [Maintenance Notes](#maintenance-notes)
+19. [Troubleshooting](#troubleshooting)
+20. [Known Limitations](#known-limitations)
+21. [Contribution Guidelines](#contribution-guidelines)
+22. [Licence](#licence)
+23. [Support](#support)
 
 ## Quick Start
 
-This repository is a collection of Codex skill folders. It is not a web application, API service, Python package, or Node package.
+This repository stores local Codex skills. It is not a web application, API service, Python package, or Node package.
 
-### 1. Confirm that the shell is in the repository root
+Run all commands in this section from the repository root.
 
-Run this command from the repository root:
+### 1. Confirm the repository root
 
 ```powershell
 Get-ChildItem .prettierrc.json
 ```
 
-What it does: checks that the shell can see a file that exists at the repository root.
+What it does: checks that the shell is in the folder that contains the repository level configuration file.
 
-Expected result: later commands can find paths such as `ipynb-guardian/scripts/notebook_doctor.py`.
+Expected result: PowerShell prints `.prettierrc.json`.
 
-Common errors:
+Common error: if the file is not found, change to the folder that contains `README.md` and the skill folders.
 
-<table>
-  <thead>
-    <tr>
-      <th>Problem</th>
-      <th>Likely cause</th>
-      <th>Resolution</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>The file is not found.</td>
-      <td>The shell is not in the repository root.</td>
-      <td>Change to the folder that contains `.prettierrc.json` and the skill folders.</td>
-    </tr>
-  </tbody>
-</table>
-
-### 2. Install the verified Python dependency for the notebook utility
-
-Run this command from the repository root:
+### 2. List the available skills
 
 ```powershell
-python -m pip install nbformat
+Get-ChildItem -Directory | Where-Object { $_.Name -ne ".git" }
 ```
 
-What it does: installs `nbformat`, which is imported by `ipynb-guardian/scripts/notebook_doctor.py`.
+What it does: lists the top level skill folders.
 
-Expected result: pip completes successfully and the notebook utility can import `nbformat`.
+Expected result: the command shows 8 skill folders, including `readme-generator` and `jupyter-notebook-guardian`.
 
-Common errors:
+Common error: if only `.git` or unrelated folders are shown, the shell is in the wrong directory.
 
-<table>
-  <thead>
-    <tr>
-      <th>Problem</th>
-      <th>Likely cause</th>
-      <th>Resolution</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>python is not recognised.</td>
-      <td>Python is not installed or is not on PATH.</td>
-      <td>Install Python 3 or use the Python launcher available on your machine.</td>
-    </tr>
-    <tr>
-      <td>Missing dependency: install with `python -m pip install nbformat`.</td>
-      <td>`nbformat` is not installed in the active Python environment.</td>
-      <td>Run the install command again in the same environment used to run the script.</td>
-    </tr>
-  </tbody>
-</table>
-
-### 3. Smoke test the notebook utility
-
-Run this command from the repository root:
+### 3. Read a skill instruction file
 
 ```powershell
-python ipynb-guardian/scripts/notebook_doctor.py --help
+Get-Content .\readme-generator\SKILL.md
 ```
 
-What it does: checks that the `notebook_doctor.py` command line interface starts correctly.
+What it does: prints the README generator skill instructions.
 
-Expected result: the command prints usage text and lists these subcommands: `inspect`, `validate`, `repair`, `clean`, `export-code`, and `diff`.
+Expected result: the file starts with YAML front matter and then the `# README Generator` heading.
+
+Common error: if the path is not found, confirm that the `readme-generator` folder exists in the repository root.
+
+### 4. Smoke test the notebook helper
+
+```powershell
+$env:PYTHONDONTWRITEBYTECODE = "1"
+python .\jupyter-notebook-guardian\scripts\notebook_doctor.py --help
+```
+
+What it does: runs the notebook helper in help mode and avoids creating `__pycache__` files.
+
+Expected result: the command prints usage text and these subcommands: `inspect`, `validate`, `repair`, `clean`, `export-code`, and `diff`.
 
 Common errors:
 
-<table>
-  <thead>
-    <tr>
-      <th>Problem</th>
-      <th>Likely cause</th>
-      <th>Resolution</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>The script path is not found.</td>
-      <td>The command was not run from the repository root.</td>
-      <td>Change to the repository root and run the command again.</td>
-    </tr>
-  </tbody>
-</table>
+| Problem                                                            | Likely cause                                                  | Resolution                                                                                                         |
+| ------------------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `python` is not recognised.                                        | Python is not installed or not on `PATH`.                     | Install Python 3 or use the Python launcher available on the machine.                                              |
+| Missing dependency: install with `python -m pip install nbformat`. | `nbformat` is not installed in the active Python environment. | Install `nbformat` in a local virtual environment as shown in [Dependency Installation](#dependency-installation). |
+| The script path is not found.                                      | The command was not run from the repository root.             | Change to the repository root and run the command again.                                                           |
 
 ## Project Overview
 
-This repository stores reusable Codex skills. A skill is a folder with a `SKILL.md` instruction file. Each skill in this repository also has an `agents/openai.yaml` metadata file that gives a display name, a short description, a default prompt, and implicit invocation policy.
+This repository contains reusable Codex skills. A skill is a folder with a `SKILL.md` file that explains when and how Codex should handle a class of tasks.
 
-The repository currently contains five skills:
+Each skill in this repository also includes an `agents/openai.yaml` metadata file. That file provides:
 
-1. `frontend-design`
-2. `internet-research`
-3. `ipynb-guardian`
-4. `readme-generator`
-5. `software-architecture`
+- `display_name`
+- `short_description`
+- `default_prompt`
+- `allow_implicit_invocation`
 
-The `ipynb-guardian` skill is the only skill in this repository that includes an executable helper script.
+One skill, `jupyter-notebook-guardian`, also includes a Python helper script for safe notebook inspection, validation, repair, cleaning, export, and semantic diff.
 
-## Problem Statement
+## Skills In This Repository
 
-Codex skills need to be stored as clear, reviewable, reusable project files. Without a repository level README, a new developer cannot quickly know:
-
-1. Which skills are available.
-2. Which files define skill behaviour.
-3. Which commands can be safely run.
-4. Which dependencies are required.
-5. Which parts of the project are not implemented, such as tests, CI, package manifests, APIs, and deployment files.
-
-## Project Goals
-
-The repository has these verified goals based on the skill descriptions:
-
-1. Provide frontend design guidance through `frontend-design`.
-2. Provide internet research workflow guidance through `internet-research`.
-3. Provide safe Jupyter notebook inspection and maintenance guidance through `ipynb-guardian`.
-4. Provide repository README generation guidance through `readme-generator`.
-5. Provide software architecture planning and review guidance through `software-architecture`.
-
-## Key Features
-
-1. Five Codex skill instruction files.
-2. Five OpenAI agent metadata files.
-3. One notebook maintenance utility script.
-4. One notebook precommit reference document.
-5. One Prettier configuration file.
-
-## Supported Use Cases
-
-<table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Supported use case</th>
-      <th>Primary files</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>frontend-design</td>
-      <td>Guidance for frontend UI, UX, layout, typography, colour, responsive polish, and design systems.</td>
-      <td><a href="frontend-design/SKILL.md">frontend-design/SKILL.md</a>, <a href="frontend-design/agents/openai.yaml">frontend-design/agents/openai.yaml</a></td>
-    </tr>
-    <tr>
-      <td>internet-research</td>
-      <td>Guidance for current external research, comparable project scouting, source quality checks, and recommendations.</td>
-      <td><a href="internet-research/SKILL.md">internet-research/SKILL.md</a>, <a href="internet-research/agents/openai.yaml">internet-research/agents/openai.yaml</a></td>
-    </tr>
-    <tr>
-      <td>ipynb-guardian</td>
-      <td>Guidance and tooling for safe Jupyter notebook inspection, validation, repair, cleaning, code export, and semantic diff.</td>
-      <td><a href="ipynb-guardian/SKILL.md">ipynb-guardian/SKILL.md</a>, <a href="ipynb-guardian/scripts/notebook_doctor.py">ipynb-guardian/scripts/notebook_doctor.py</a></td>
-    </tr>
-    <tr>
-      <td>readme-generator</td>
-      <td>Guidance for generating a verified repository README.</td>
-      <td><a href="readme-generator/SKILL.md">readme-generator/SKILL.md</a>, <a href="readme-generator/agents/openai.yaml">readme-generator/agents/openai.yaml</a></td>
-    </tr>
-    <tr>
-      <td>software-architecture</td>
-      <td>Guidance for architecture planning, critique, tradeoff analysis, ADRs, migrations, and verification plans.</td>
-      <td><a href="software-architecture/SKILL.md">software-architecture/SKILL.md</a>, <a href="software-architecture/agents/openai.yaml">software-architecture/agents/openai.yaml</a></td>
-    </tr>
-  </tbody>
-</table>
-
-## System Architecture
-
-This repository has a file based architecture:
-
-1. Each top level skill folder owns one `SKILL.md` file.
-2. Each skill folder owns one `agents/openai.yaml` metadata file.
-3. `ipynb-guardian` also owns a `scripts` folder and a `references` folder.
-4. There is no shared runtime entry point.
-5. There is no API layer, web server, database, queue, cache, or background worker in the current repository.
-
-No Mermaid diagram is included because the repository does not define a runtime system flow, API flow, authentication flow, database relationship, or deployment flow.
-
-## Application Workflow
-
-This repository does not define an application workflow. It defines skill usage workflows.
-
-General skill workflow:
-
-1. A user invokes or implies a skill.
-2. Codex reads the matching `SKILL.md`.
-3. Codex follows the workflow and rules in that file.
-4. If the skill has helper files, Codex uses them only when relevant.
-
-`ipynb-guardian` workflow:
-
-1. Inspect a notebook.
-2. Validate notebook structure.
-3. Repair structure only when needed.
-4. Clean outputs only when the task requires it.
-5. Export code or create a semantic diff when needed.
-6. Execute the notebook from a fresh kernel when execution is possible and relevant.
-
-## Technology Stack
-
-<table>
-  <thead>
-    <tr>
-      <th>Technology</th>
-      <th>Version</th>
-      <th>Purpose</th>
-      <th>Where used</th>
-      <th>Why it is needed</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Markdown</td>
-      <td>Not declared</td>
-      <td>Stores skill instructions and documentation.</td>
-      <td>`SKILL.md`, `README.md`, and `references/precommit.md` files.</td>
-      <td>Codex skills are instruction documents.</td>
-    </tr>
-    <tr>
-      <td>YAML</td>
-      <td>Not declared</td>
-      <td>Stores agent metadata.</td>
-      <td>Each `agents/openai.yaml` file.</td>
-      <td>The metadata defines display name, short description, default prompt, and implicit invocation policy.</td>
-    </tr>
-    <tr>
-      <td>Python</td>
-      <td>Exact version not declared</td>
-      <td>Runs the notebook maintenance utility.</td>
-      <td>`ipynb-guardian/scripts/notebook_doctor.py`.</td>
-      <td>The script inspects, validates, repairs, cleans, exports, and diffs notebooks.</td>
-    </tr>
-    <tr>
-      <td>nbformat</td>
-      <td>Exact version not declared</td>
-      <td>Reads, writes, converts, normalises, and validates Jupyter notebooks.</td>
-      <td>`ipynb-guardian/scripts/notebook_doctor.py`.</td>
-      <td>The script depends on `nbformat` instead of editing raw notebook JSON directly.</td>
-    </tr>
-    <tr>
-      <td>Prettier configuration</td>
-      <td>Prettier version not declared</td>
-      <td>Defines formatting preferences.</td>
-      <td>`.prettierrc.json`.</td>
-      <td>The repository sets `useTabs` to `true` and `tabWidth` to `2`.</td>
-    </tr>
-  </tbody>
-</table>
+| Skill                       | Purpose                                                                                                               | Main files                                                                                                                                                                             |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `codebase-architecture`     | Reviews, plans, hardens, cleans up, deduplicates, and documents codebase structure.                                   | [codebase-architecture/SKILL.md](codebase-architecture/SKILL.md), [codebase-architecture/agents/openai.yaml](codebase-architecture/agents/openai.yaml)                                 |
+| `detailed-git-commit`       | Creates factual Git commits with inspected changes and strict commit message formatting.                              | [detailed-git-commit/SKILL.md](detailed-git-commit/SKILL.md), [detailed-git-commit/agents/openai.yaml](detailed-git-commit/agents/openai.yaml)                                         |
+| `frontend-design`           | Guides clean, functional frontend UI and UX work with custom accessible components.                                   | [frontend-design/SKILL.md](frontend-design/SKILL.md), [frontend-design/agents/openai.yaml](frontend-design/agents/openai.yaml)                                                         |
+| `internet-research`         | Guides current, source based research, comparison, validation, and recommendation work.                               | [internet-research/SKILL.md](internet-research/SKILL.md), [internet-research/agents/openai.yaml](internet-research/agents/openai.yaml)                                                 |
+| `jupyter-notebook-guardian` | Protects Jupyter notebook edits from JSON corruption, hidden state, noisy diffs, and execution order errors.          | [jupyter-notebook-guardian/SKILL.md](jupyter-notebook-guardian/SKILL.md), [jupyter-notebook-guardian/scripts/notebook_doctor.py](jupyter-notebook-guardian/scripts/notebook_doctor.py) |
+| `readme-generator`          | Generates or updates a verified repository README from inspected repository facts.                                    | [readme-generator/SKILL.md](readme-generator/SKILL.md), [readme-generator/agents/openai.yaml](readme-generator/agents/openai.yaml)                                                     |
+| `repo-local-tooling`        | Keeps task tools, dependency caches, helper scripts, downloads, and generated artifacts inside the target repository. | [repo-local-tooling/SKILL.md](repo-local-tooling/SKILL.md), [repo-local-tooling/agents/openai.yaml](repo-local-tooling/agents/openai.yaml)                                             |
+| `test-local-app-end-to-end` | Guides local web application testing with Playwright, disposable browser sessions, logs, and retesting.               | [test-local-app-end-to-end/SKILL.md](test-local-app-end-to-end/SKILL.md), [test-local-app-end-to-end/agents/openai.yaml](test-local-app-end-to-end/agents/openai.yaml)                 |
 
 ## Repository Structure
 
@@ -313,6 +120,14 @@ General skill workflow:
 |-- .gitattributes
 |-- .prettierrc.json
 |-- README.md
+|-- codebase-architecture/
+|   |-- SKILL.md
+|   `-- agents/
+|       `-- openai.yaml
+|-- detailed-git-commit/
+|   |-- SKILL.md
+|   `-- agents/
+|       `-- openai.yaml
 |-- frontend-design/
 |   |-- SKILL.md
 |   `-- agents/
@@ -321,7 +136,7 @@ General skill workflow:
 |   |-- SKILL.md
 |   `-- agents/
 |       `-- openai.yaml
-|-- ipynb-guardian/
+|-- jupyter-notebook-guardian/
 |   |-- README.md
 |   |-- SKILL.md
 |   |-- agents/
@@ -334,7 +149,11 @@ General skill workflow:
 |   |-- SKILL.md
 |   `-- agents/
 |       `-- openai.yaml
-`-- software-architecture/
+|-- repo-local-tooling/
+|   |-- SKILL.md
+|   `-- agents/
+|       `-- openai.yaml
+`-- test-local-app-end-to-end/
     |-- SKILL.md
     `-- agents/
         `-- openai.yaml
@@ -342,74 +161,74 @@ General skill workflow:
 
 Important paths:
 
-1. `.gitattributes`: Git text file normalisation rules.
-2. `.prettierrc.json`: formatter preferences for tabs and tab width.
-3. `frontend-design/SKILL.md`: frontend design workflow and design quality rules.
-4. `internet-research/SKILL.md`: internet research workflow and source quality rules.
-5. `ipynb-guardian/SKILL.md`: notebook safety workflow and completion checklist.
-6. `ipynb-guardian/README.md`: short install and smoke test notes for the notebook skill.
-7. `ipynb-guardian/references/precommit.md`: optional notebook repository protection notes.
-8. `ipynb-guardian/scripts/notebook_doctor.py`: command line notebook maintenance utility.
-9. `readme-generator/SKILL.md`: README generation workflow and validation rules.
-10. `software-architecture/SKILL.md`: software architecture planning, review, ADR, and validation workflow.
-11. `*/agents/openai.yaml`: agent display and invocation metadata for each skill.
+- `.gitattributes`: enables automatic text file normalisation through Git.
+- `.prettierrc.json`: stores formatter preferences for tabs and tab width.
+- `*/SKILL.md`: stores the main instructions for each skill.
+- `*/agents/openai.yaml`: stores display and invocation metadata for each skill.
+- `jupyter-notebook-guardian/README.md`: gives short setup notes for the notebook skill.
+- `jupyter-notebook-guardian/references/precommit.md`: documents optional notebook Git protection commands.
+- `jupyter-notebook-guardian/scripts/notebook_doctor.py`: provides the notebook maintenance command line tool.
+
+## Technology Stack
+
+| Technology             | Version                       | Purpose                                                       | Where used                                              | Notes                                                      |
+| ---------------------- | ----------------------------- | ------------------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------------- |
+| Markdown               | Not declared                  | Stores skill instructions and documentation.                  | `README.md`, `SKILL.md`, and reference files.           | Codex reads skill behaviour from Markdown files.           |
+| YAML                   | Not declared                  | Stores skill metadata.                                        | `agents/openai.yaml` files.                             | Each metadata file enables implicit invocation.            |
+| Python                 | Exact version not declared    | Runs the notebook helper script.                              | `jupyter-notebook-guardian/scripts/notebook_doctor.py`. | The script uses Python 3 syntax and a Python 3 shebang.    |
+| `nbformat`             | Exact version not declared    | Reads, writes, converts, normalises, and validates notebooks. | Imported by `notebook_doctor.py`.                       | The script exits with an install message if it is missing. |
+| Git                    | Exact version not declared    | Tracks repository changes and applies `.gitattributes`.       | `.git`, `.gitattributes`.                               | The current folder is a Git work tree.                     |
+| Prettier configuration | Prettier version not declared | Defines formatting preferences.                               | `.prettierrc.json`.                                     | The file sets `useTabs` to `true` and `tabWidth` to `2`.   |
+
+No root package manager manifest is present. There is no `package.json`, `pyproject.toml`, `requirements.txt`, lock file, or setup file.
 
 ## Prerequisites
 
-<table>
-  <thead>
-    <tr>
-      <th>Prerequisite</th>
-      <th>Required for</th>
-      <th>Version</th>
-      <th>Verification</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Codex skills compatible environment</td>
-      <td>Using the skill folders as Codex skills.</td>
-      <td>Not declared in the repository.</td>
-      <td>No command is provided in the repository.</td>
-    </tr>
-    <tr>
-      <td>Python 3</td>
-      <td>Running `notebook_doctor.py`.</td>
-      <td>Exact version not declared.</td>
-      <td>The script has a Python 3 shebang and Python 3 syntax.</td>
-    </tr>
-    <tr>
-      <td>nbformat</td>
-      <td>Running `notebook_doctor.py`.</td>
-      <td>Exact version not declared.</td>
-      <td>The script imports `nbformat` and exits with an install message if it is missing.</td>
-    </tr>
-  </tbody>
-</table>
+| Prerequisite                        | Required for                            | Version                         | Verification                                                                                           |
+| ----------------------------------- | --------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Codex skills compatible environment | Using these folders as Codex skills.    | Not declared in the repository. | The repository contains skill folders with `SKILL.md`.                                                 |
+| Git                                 | Repository maintenance.                 | Not declared in the repository. | `git rev-parse --is-inside-work-tree` returns `true`.                                                  |
+| Python 3                            | Running `notebook_doctor.py`.           | Exact version not declared.     | The script has a Python 3 shebang and uses Python 3 syntax.                                            |
+| `nbformat`                          | Notebook helper commands.               | Exact version not declared.     | The script imports `nbformat` and the help command runs when it is installed.                          |
+| Jupyter `nbconvert`                 | Fresh kernel notebook execution checks. | Not declared in the repository. | The command is documented in `jupyter-notebook-guardian/SKILL.md`, but no dependency file declares it. |
 
 ## Local Installation
 
-There is no repository level installer script.
+There is no repository level install script.
 
-To use the skill files locally:
+To use a skill locally:
 
 1. Keep this repository in a stable folder.
-2. Copy the required skill folder into your Codex skills directory when you want to install that skill.
-3. Preserve the folder name and the `SKILL.md` file.
+2. Copy the required skill folder into your Codex skills directory.
+3. Preserve the folder name.
+4. Preserve the `SKILL.md` file.
+5. Preserve any supporting files in that skill folder, such as `scripts/`, `references/`, and `agents/`.
 
-The only folder that documents this copy based install process inside the repository is `ipynb-guardian`.
+The repository does not declare the exact Codex skills directory path because that depends on the local Codex setup.
 
 ## Dependency Installation
 
-There is no `requirements.txt`, `pyproject.toml`, `package.json`, or lock file in the repository.
+The repository has one verified runtime dependency for the notebook helper: `nbformat`.
 
-The verified required dependency is:
+Use a repository local virtual environment when installing it:
 
 ```powershell
-python -m pip install nbformat
+python -m venv .venv
+.\.venv\Scripts\python -m pip install --upgrade pip --cache-dir .cache\pip
+.\.venv\Scripts\python -m pip install nbformat --cache-dir .cache\pip
 ```
 
-Optional notebook repository protection dependencies are documented in `ipynb-guardian/references/precommit.md`:
+What these commands do:
+
+- Create a local Python virtual environment in `.venv`.
+- Upgrade pip inside that virtual environment.
+- Install `nbformat` while keeping the pip cache under `.cache\pip`.
+
+Expected result: `.\.venv\Scripts\python .\jupyter-notebook-guardian\scripts\notebook_doctor.py --help` prints the notebook helper usage text.
+
+These dependency setup commands were not executed while preparing this README because they create local environment and cache folders. The notebook helper itself was smoke tested with the current Python environment.
+
+Optional notebook repository protection tools are documented in [jupyter-notebook-guardian/references/precommit.md](jupyter-notebook-guardian/references/precommit.md):
 
 ```powershell
 python -m pip install nbformat nbstripout nbdime
@@ -417,108 +236,49 @@ nbdime config-git --enable
 nbstripout --install
 ```
 
-These optional commands were not executed while preparing this README because they modify local Git or user configuration.
+Those optional commands modify local Python or Git configuration depending on the active environment. They were not executed while preparing this README.
 
-## Environment Configuration
-
-No environment variables are read by the current repository files.
-
-<table>
-  <thead>
-    <tr>
-      <th>Variable name</th>
-      <th>Required</th>
-      <th>Purpose</th>
-      <th>Expected format</th>
-      <th>Safe example value</th>
-      <th>Default value</th>
-      <th>Security notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>None found</td>
-      <td>No</td>
-      <td>Not applicable</td>
-      <td>Not applicable</td>
-      <td>Not applicable</td>
-      <td>Not applicable</td>
-      <td>No secret values are required by the repository.</td>
-    </tr>
-  </tbody>
-</table>
-
-## Database Setup
-
-No database files, schemas, migrations, seed files, or database connection code are present.
-
-## Running The Project
+## Running Commands
 
 There is no long running application to start.
 
-The executable part of the repository is the notebook utility:
+Useful repository commands:
+
+| Command                                                                | Purpose                               | Expected result                                                          |
+| ---------------------------------------------------------------------- | ------------------------------------- | ------------------------------------------------------------------------ |
+| `rg --files -g '!.git'`                                                | List repository files outside `.git`. | Prints 20 tracked or working tree files in the current repository state. |
+| `Get-ChildItem -Directory                                              | Where-Object { $_.Name -ne ".git" }`  | List skill folders.                                                      | Prints 8 skill folders. |
+| `Get-Content .\readme-generator\SKILL.md`                              | Read the README generator skill.      | Prints the selected skill instructions.                                  |
+| `python .\jupyter-notebook-guardian\scripts\notebook_doctor.py --help` | Run the notebook helper help command. | Prints usage text and 6 subcommands.                                     |
+
+## Notebook Utility
+
+The notebook helper is [jupyter-notebook-guardian/scripts/notebook_doctor.py](jupyter-notebook-guardian/scripts/notebook_doctor.py).
+
+Available subcommands:
+
+| Subcommand    | Purpose                                                                                                   |
+| ------------- | --------------------------------------------------------------------------------------------------------- |
+| `inspect`     | Prints notebook metadata, cell counts, output size, cell ID health, execution count health, and warnings. |
+| `validate`    | Validates notebook structure through `nbformat` and checks duplicate cell IDs.                            |
+| `repair`      | Converts the notebook to format 4, normalises it, and repairs missing or duplicate cell IDs.              |
+| `clean`       | Clears code cell outputs and execution counts, with optional widget metadata removal.                     |
+| `export-code` | Exports code cells to a Python file with cell index and cell ID markers.                                  |
+| `diff`        | Prints a semantic diff between two notebooks based on cell source, type, outputs, and execution counts.   |
+
+Examples:
 
 ```powershell
-python ipynb-guardian/scripts/notebook_doctor.py --help
+python .\jupyter-notebook-guardian\scripts\notebook_doctor.py inspect path\to\notebook.ipynb
+python .\jupyter-notebook-guardian\scripts\notebook_doctor.py validate path\to\notebook.ipynb
+python .\jupyter-notebook-guardian\scripts\notebook_doctor.py repair path\to\notebook.ipynb --backup
+python .\jupyter-notebook-guardian\scripts\notebook_doctor.py clean path\to\notebook.ipynb --backup
+python .\jupyter-notebook-guardian\scripts\notebook_doctor.py clean path\to\notebook.ipynb --backup --drop-widgets
+python .\jupyter-notebook-guardian\scripts\notebook_doctor.py export-code path\to\notebook.ipynb --output path\to\notebook_cells.py
+python .\jupyter-notebook-guardian\scripts\notebook_doctor.py diff before.ipynb after.ipynb
 ```
 
-Run it from the repository root. The expected result is command usage text.
-
-## Available Scripts And Commands
-
-### notebook_doctor.py
-
-Show help:
-
-```powershell
-python ipynb-guardian/scripts/notebook_doctor.py --help
-```
-
-Inspect a notebook:
-
-```powershell
-python ipynb-guardian/scripts/notebook_doctor.py inspect path/to/notebook.ipynb
-```
-
-Validate a notebook:
-
-```powershell
-python ipynb-guardian/scripts/notebook_doctor.py validate path/to/notebook.ipynb
-```
-
-Repair a notebook and create a backup:
-
-```powershell
-python ipynb-guardian/scripts/notebook_doctor.py repair path/to/notebook.ipynb --backup
-```
-
-Clean notebook outputs and execution counts while creating a backup:
-
-```powershell
-python ipynb-guardian/scripts/notebook_doctor.py clean path/to/notebook.ipynb --backup
-```
-
-Clean notebook outputs, execution counts, and widget metadata:
-
-```powershell
-python ipynb-guardian/scripts/notebook_doctor.py clean path/to/notebook.ipynb --backup --drop-widgets
-```
-
-Export notebook code cells:
-
-```powershell
-python ipynb-guardian/scripts/notebook_doctor.py export-code path/to/notebook.ipynb --output path/to/notebook_cells.py
-```
-
-Show a semantic notebook diff:
-
-```powershell
-python ipynb-guardian/scripts/notebook_doctor.py diff before.ipynb after.ipynb
-```
-
-### Documented notebook execution check
-
-`ipynb-guardian/SKILL.md` documents this Jupyter execution command:
+The notebook skill also documents this fresh kernel execution check:
 
 ```bash
 jupyter nbconvert \
@@ -529,62 +289,67 @@ jupyter nbconvert \
   --ExecutePreprocessor.kernel_name=python3
 ```
 
-This command was not executed while preparing this README because the repository does not contain a notebook file.
+This command was not executed while preparing this README because the repository does not contain a notebook file and does not declare Jupyter as a dependency.
 
-## API Documentation
+## Environment Configuration
 
-No API endpoints are present in the repository. No HTTP routes, request bodies, response bodies, status codes, or API authentication rules can be documented from the current files.
+No environment variables are read by the current repository files.
 
-## Authentication And Authorisation
+| Variable name | Required | Purpose        | Expected format | Safe example value | Default value  | Security notes                                   |
+| ------------- | -------- | -------------- | --------------- | ------------------ | -------------- | ------------------------------------------------ |
+| None found    | No       | Not applicable | Not applicable  | Not applicable     | Not applicable | No secret values are required by the repository. |
 
-No authentication or authorisation code is present. The skill documents are local instruction files and the notebook utility runs as a local command.
+## Input Validation And Error Handling
 
-## Input Validation
-
-The repository contains input validation in `ipynb-guardian/scripts/notebook_doctor.py`.
+The repository contains input validation and error handling in `jupyter-notebook-guardian/scripts/notebook_doctor.py`.
 
 Verified behaviour:
 
-1. `load_notebook` reads notebooks through `nbformat.read`.
-2. Invalid JSON exits with an explicit message.
-3. `validate_notebook` runs `nbformat.validate`.
-4. Duplicate cell IDs are treated as invalid.
-5. `repair_notebook` converts notebooks to format version 4 and regenerates missing or duplicate cell IDs.
-6. `atomic_write` validates a notebook before replacing the target file.
+- Missing `nbformat` exits with an install message.
+- Invalid JSON exits with an explicit message.
+- Notebook read failures exit with the failing path and error.
+- `validate` runs `nbformat.validate`.
+- Duplicate cell IDs are reported as invalid.
+- `repair` converts notebooks to format 4 and regenerates missing or duplicate cell IDs.
+- `atomic_write` writes to a temporary file, validates the notebook, and then replaces the target file.
+- `inspect` warns when embedded notebook outputs exceed 5 MiB.
 
-## Error Handling
+No API input validation exists because the repository contains no API server.
 
-The notebook utility handles these errors:
+## Testing And Verification
 
-1. Missing `nbformat` dependency.
-2. Invalid JSON in a notebook file.
-3. Notebook read failure.
-4. Notebook validation failure.
-5. Duplicate cell IDs.
+No automated test files are present.
 
-The script reports failures through console output and process exit codes.
-
-## Logging
-
-No logging framework is present. The notebook utility uses `print` statements and standard error for command line feedback.
-
-## Testing
-
-No test files are present in the repository.
-
-Verified checks run while preparing this README:
+Verification run while preparing this README:
 
 ```powershell
-python ipynb-guardian/scripts/notebook_doctor.py --help
+$env:PYTHONDONTWRITEBYTECODE = "1"
+python .\jupyter-notebook-guardian\scripts\notebook_doctor.py --help
 ```
 
-This command passed and printed command usage text.
+Result: passed. The command printed usage text and listed 6 subcommands.
 
-The repository does not contain sample notebooks, so notebook validation, repair, cleaning, export, and diff commands were not run against a real notebook.
+Other verification checks were performed by repository inspection:
+
+- `rg --files -g '!.git'`
+- search for package manifests
+- search for environment variable access patterns
+- search for API route or server patterns
+- search for test files
+- search for CI and deployment files
+- search for licence files
+
+Notebook validation, repair, clean, export, diff, and execution commands were not run against a real notebook because the repository does not contain a notebook file.
+
+Test coverage percentage:
+
+```text
+Not measured in the current repository.
+```
 
 ## Code Quality Checks
 
-The repository contains `.prettierrc.json` with these settings:
+The repository contains this Prettier configuration:
 
 ```json
 {
@@ -593,244 +358,115 @@ The repository contains `.prettierrc.json` with these settings:
 }
 ```
 
-No formatter script, lint script, type check script, or precommit configuration file is present at the repository root.
+The repository also contains `.gitattributes`:
 
-## Build Process
+```text
+# Auto detect text files and perform LF normalization
+* text=auto
+```
 
-No build process is present. There is no compiled application, package manifest, bundler configuration, or build script.
+No formatter script, lint script, type check script, precommit configuration file, or automated test command is declared at the repository root.
 
-## Production Deployment
+## Build, Deployment, And CI
 
-No production deployment process is present. There is no hosting configuration, Dockerfile, compose file, deployment script, or release workflow.
+There is no build process. The repository contains Markdown, YAML, and one Python helper script.
 
-## CI Or CD Process
+The repository does not contain:
 
-No CI or CD workflow is present. There is no `.github` directory or other pipeline configuration in the repository.
+- API server code
+- database schema or migrations
+- Dockerfile
+- Docker Compose file
+- deployment configuration
+- `.github` workflow files
+- package build script
+- hosting configuration
 
 ## Repository Metrics
 
-<table>
-  <thead>
-    <tr>
-      <th>Metric name</th>
-      <th>Verified value</th>
-      <th>Source file or command used for verification</th>
-      <th>Notes or limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Skill directories</td>
-      <td>5</td>
-      <td>`Get-ChildItem -Directory`</td>
-      <td>Top level skill folders only.</td>
-    </tr>
-    <tr>
-      <td>Skill definition files</td>
-      <td>5</td>
-      <td>`rg --files`</td>
-      <td>Files named `SKILL.md`.</td>
-    </tr>
-    <tr>
-      <td>Agent metadata files</td>
-      <td>5</td>
-      <td>`rg --files`</td>
-      <td>Files named `agents/openai.yaml`.</td>
-    </tr>
-    <tr>
-      <td>Python scripts</td>
-      <td>1</td>
-      <td>`Get-ChildItem -Recurse -File`</td>
-      <td>`ipynb-guardian/scripts/notebook_doctor.py`.</td>
-    </tr>
-    <tr>
-      <td>Notebook utility subcommands</td>
-      <td>6</td>
-      <td>`python ipynb-guardian/scripts/notebook_doctor.py --help`</td>
-      <td>`inspect`, `validate`, `repair`, `clean`, `export-code`, and `diff`.</td>
-    </tr>
-    <tr>
-      <td>Package manifests</td>
-      <td>0</td>
-      <td>`Get-ChildItem -Recurse -File -Include package.json,pyproject.toml,requirements.txt,setup.py`</td>
-      <td>No package manager metadata found.</td>
-    </tr>
-    <tr>
-      <td>API endpoints</td>
-      <td>0</td>
-      <td>`rg` search for common route and server patterns</td>
-      <td>No API server code found.</td>
-    </tr>
-    <tr>
-      <td>Environment variables</td>
-      <td>0</td>
-      <td>`rg` search for common environment variable access patterns</td>
-      <td>No environment reads found.</td>
-    </tr>
-    <tr>
-      <td>Database models</td>
-      <td>0</td>
-      <td>Repository file inspection</td>
-      <td>No database files found.</td>
-    </tr>
-    <tr>
-      <td>Test files</td>
-      <td>0</td>
-      <td>`Get-ChildItem -Recurse -File -Include '*test*','*.spec.*','*.test.*'`</td>
-      <td>No test files found.</td>
-    </tr>
-    <tr>
-      <td>Test coverage percentage</td>
-      <td>Not measured in the current repository.</td>
-      <td>No coverage tool or report found.</td>
-      <td>Coverage cannot be verified.</td>
-    </tr>
-    <tr>
-      <td>Notebook output warning threshold</td>
-      <td>5 MiB</td>
-      <td>`ipynb-guardian/scripts/notebook_doctor.py`</td>
-      <td>The inspect command warns when embedded outputs exceed this size.</td>
-    </tr>
-    <tr>
-      <td>Notebook execution timeout in documented command</td>
-      <td>600 seconds</td>
-      <td>`ipynb-guardian/SKILL.md`</td>
-      <td>Documented for `jupyter nbconvert` execution verification.</td>
-    </tr>
-    <tr>
-      <td>Default ports</td>
-      <td>0</td>
-      <td>Repository file inspection</td>
-      <td>No server or port configuration found.</td>
-    </tr>
-  </tbody>
-</table>
+| Metric name                           | Verified value                          | Source file or command used for verification                                                 | Notes                                                                             |
+| ------------------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Git work tree                         | Yes                                     | `git rev-parse --is-inside-work-tree`                                                        | Returned `true`.                                                                  |
+| Top level skill directories           | 8                                       | `Get-ChildItem -Force -Directory` filtered to exclude `.git`                                 | Counts current working tree folders.                                              |
+| Skill definition files                | 8                                       | `rg --files -g '!.git' -g 'SKILL.md'`                                                        | Files named `SKILL.md`.                                                           |
+| Agent metadata files                  | 8                                       | `rg --files -g '!.git'` filtered for `agents\openai.yaml`                                    | One metadata file per skill.                                                      |
+| Repository files outside `.git`       | 20                                      | `rg --files -g '!.git'`                                                                      | Includes root files, skill docs, metadata, reference docs, and the Python script. |
+| Markdown files                        | 11                                      | `rg --files -g '!.git'` filtered for `.md`                                                   | Includes this README and all skill Markdown files.                                |
+| YAML files                            | 8                                       | `rg --files -g '!.git'` filtered for `.yaml`                                                 | Agent metadata files only.                                                        |
+| Python scripts                        | 1                                       | `rg --files -g '!.git'` filtered for `.py`                                                   | `notebook_doctor.py`.                                                             |
+| Notebook helper subcommands           | 6                                       | `python .\jupyter-notebook-guardian\scripts\notebook_doctor.py --help`                       | `inspect`, `validate`, `repair`, `clean`, `export-code`, and `diff`.              |
+| Package manifests                     | 0                                       | Search for `package.json`, `pyproject.toml`, `requirements.txt`, setup files, and lock files | No package manager metadata found.                                                |
+| API endpoints                         | 0                                       | Search for common route and server patterns                                                  | No API server code found.                                                         |
+| Environment variables                 | 0                                       | Search for common environment access patterns                                                | No environment reads found.                                                       |
+| Database models                       | 0                                       | Repository file inspection                                                                   | No database files found.                                                          |
+| Test files                            | 0                                       | Search for `*test*`, `*.spec.*`, and `*.test.*`                                              | No automated tests found.                                                         |
+| CI or deployment files                | 0                                       | Search for common CI, Docker, compose, and hosting files                                     | No deployment pipeline found.                                                     |
+| Default ports                         | 0                                       | Repository file inspection                                                                   | No server or port configuration found.                                            |
+| Notebook output warning threshold     | 5 MiB                                   | `jupyter-notebook-guardian/scripts/notebook_doctor.py`                                       | Used by the `inspect` command.                                                    |
+| Documented notebook execution timeout | 600 seconds                             | `jupyter-notebook-guardian/SKILL.md`                                                         | Used in the documented `jupyter nbconvert` command.                               |
+| Test coverage percentage              | Not measured in the current repository. | No coverage report found                                                                     | Coverage cannot be verified.                                                      |
 
-## Security Considerations
+## Security Notes
 
-1. No real secrets, tokens, passwords, private keys, or connection strings were found during README inspection.
-2. No environment variables are required by repository code.
-3. Notebook outputs can contain sensitive data. `ipynb-guardian/SKILL.md` instructs users to check for secrets and machine specific paths before finalising notebook work.
-4. `notebook_doctor.py` can create backups when `--backup` is passed to `repair` or `clean`.
-5. The script does not implement a full secret scanner. Manual review is still required before sharing notebooks.
+- No secrets, tokens, passwords, private keys, or connection strings were found during README inspection.
+- No environment variables are required by repository code.
+- Notebook outputs can contain sensitive data. The notebook skill instructs users to check for secrets and machine specific paths before finalising notebook work.
+- `notebook_doctor.py` can create backups when `--backup` is passed to `repair` or `clean`.
+- `notebook_doctor.py` is not a secret scanner. Review notebooks manually before sharing them.
 
-## Performance Considerations
+## Maintenance Notes
 
-No runtime performance benchmark is present.
-
-Verified performance related value:
-
-1. `notebook_doctor.py inspect` warns when embedded notebook outputs exceed 5 MiB.
-
-Other values are not measured in the current repository.
-
-## Monitoring And Maintenance
-
-There is no monitoring setup because the repository does not run a service.
-
-Recommended maintenance based on current files:
-
-1. Keep each skill folder self contained.
-2. Update the matching `agents/openai.yaml` when a skill name, description, or default prompt changes.
-3. Run the notebook utility smoke test after changing `notebook_doctor.py`.
-4. Add a dependency manifest if more Python dependencies are introduced.
-5. Add tests if `notebook_doctor.py` gains more behaviour.
-6. Add the missing `LICENSE.txt` file or remove the licence reference from `frontend-design/SKILL.md`.
+- Keep each skill in its own top level folder.
+- Keep each main skill instruction file named `SKILL.md`.
+- Keep each agent metadata file at `agents/openai.yaml`.
+- Update this README when adding, renaming, or removing a skill.
+- Update the matching `agents/openai.yaml` when a skill name, description, default prompt, or invocation policy changes.
+- Add a dependency manifest if more Python dependencies are introduced.
+- Add tests if `notebook_doctor.py` gains more behaviour.
+- Do not commit local dependency folders such as `.venv` or `.cache`.
 
 ## Troubleshooting
 
-<table>
-  <thead>
-    <tr>
-      <th>Problem</th>
-      <th>Likely cause</th>
-      <th>Diagnostic command</th>
-      <th>Resolution</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`python` is not recognised.</td>
-      <td>Python is not installed or is not on PATH.</td>
-      <td>`python --version`</td>
-      <td>Install Python 3 or use the available Python launcher.</td>
-    </tr>
-    <tr>
-      <td>`notebook_doctor.py` reports missing `nbformat`.</td>
-      <td>The active Python environment does not have `nbformat` installed.</td>
-      <td>`python -m pip show nbformat`</td>
-      <td>Run `python -m pip install nbformat`.</td>
-    </tr>
-    <tr>
-      <td>The notebook path is not found.</td>
-      <td>The command uses a placeholder path or the shell is in the wrong directory.</td>
-      <td>`Get-Location`</td>
-      <td>Run the command from the repository root or pass the correct notebook path.</td>
-    </tr>
-    <tr>
-      <td>A notebook is reported as invalid.</td>
-      <td>The file has invalid JSON, invalid notebook schema, or duplicate cell IDs.</td>
-      <td>`python ipynb-guardian/scripts/notebook_doctor.py validate path/to/notebook.ipynb`</td>
-      <td>Inspect the error. If structure repair is appropriate, run `repair` with `--backup`.</td>
-    </tr>
-    <tr>
-      <td>Optional precommit commands are unavailable.</td>
-      <td>`nbstripout` or `nbdime` is not installed.</td>
-      <td>`python -m pip show nbstripout nbdime`</td>
-      <td>Install them with the optional command documented in `ipynb-guardian/references/precommit.md`.</td>
-    </tr>
-  </tbody>
-</table>
+| Problem                                                               | Likely cause                                                                | Diagnostic command                                                                              | Resolution                                                                                                               |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `python` is not recognised.                                           | Python is not installed or not on `PATH`.                                   | `python --version`                                                                              | Install Python 3 or use the Python launcher available on the machine.                                                    |
+| `notebook_doctor.py` reports missing `nbformat`.                      | The active Python environment does not have `nbformat`.                     | `python -m pip show nbformat`                                                                   | Install `nbformat` in a repository local virtual environment.                                                            |
+| The notebook path is not found.                                       | The command uses a placeholder path or the shell is in the wrong directory. | `Get-Location`                                                                                  | Run the command from the repository root or pass the correct notebook path.                                              |
+| A notebook is reported as invalid.                                    | The file has invalid JSON, invalid notebook schema, or duplicate cell IDs.  | `python .\jupyter-notebook-guardian\scripts\notebook_doctor.py validate path\to\notebook.ipynb` | Inspect the error. If structure repair is appropriate, run `repair` with `--backup`.                                     |
+| `jupyter nbconvert` is unavailable.                                   | Jupyter is not installed in the active Python environment.                  | `python -m pip show jupyter nbconvert`                                                          | Install the required Jupyter tools in a local virtual environment before running execution checks.                       |
+| New `.venv` or `.cache` folders appear after dependency installation. | Local dependency setup was run.                                             | `git status --short`                                                                            | Keep those folders local and do not commit them unless the repository intentionally adds tooling configuration for them. |
 
 ## Known Limitations
 
-1. The current folder is not a Git repository.
-2. There is no root package manifest.
-3. There is no automated test suite.
-4. There is no CI or CD setup.
-5. There is no deployment configuration.
-6. There is no API service or database layer.
-7. `frontend-design/SKILL.md` references `LICENSE.txt`, but no `LICENSE.txt` file is present in the repository.
-8. `ipynb-guardian` is the only skill with a helper script.
-9. The exact supported Python version is not declared.
-10. Dependency versions are not pinned.
+- There is no root package manifest.
+- Dependency versions are not pinned.
+- The exact supported Python version is not declared.
+- There is no automated test suite.
+- There is no coverage report.
+- There is no lint, type check, or format script.
+- There is no CI or CD setup.
+- There is no deployment configuration.
+- There is no API service or database layer.
+- There is no repository level `.gitignore` for local virtual environments or caches.
+- `jupyter-notebook-guardian` is the only skill with an executable helper script.
 
 ## Contribution Guidelines
 
 No formal contributing guide is present.
 
-For changes to this repository:
+Use these repository rules for changes:
 
-1. Keep each skill in its own folder.
-2. Keep the main instruction file named `SKILL.md`.
-3. Keep agent metadata in `agents/openai.yaml`.
-4. Update this README when adding, renaming, or removing a skill.
-5. Add tests before expanding notebook utility behaviour.
-6. Do not commit secrets or personal machine paths.
-
-## Coding Standards
-
-Current verified standards:
-
-1. `.prettierrc.json` sets tabs and a tab width of 2.
-2. `notebook_doctor.py` uses Python type annotations.
-3. Notebook operations should use `nbformat` or `notebook_doctor.py` instead of blind raw JSON edits.
-4. Skill instructions should be direct and task specific.
-
-No lint configuration is present.
+- Make small, focused edits.
+- Preserve each skill folder as a self contained unit.
+- Update `SKILL.md` and `agents/openai.yaml` together when skill behaviour changes.
+- Update this README when repository structure or commands change.
+- Use repository local tooling and caches for task specific dependencies.
+- Do not commit secrets, notebook outputs with private data, local virtual environments, or machine specific paths.
 
 ## Licence
 
-No repository level licence file is present.
+No repository level licence file is present. Licence terms cannot be verified from the current files.
 
-`frontend-design/SKILL.md` contains this front matter field:
-
-```yaml
-license: Complete terms in LICENSE.txt
-```
-
-The referenced `LICENSE.txt` file is not present in the repository, so the licence terms cannot be verified from the current files.
-
-## Support And Contact Information
+## Support
 
 No support contact, issue tracker, maintainer email, or project URL is present in the repository.

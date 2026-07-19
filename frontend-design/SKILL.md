@@ -1,55 +1,77 @@
 ---
 name: frontend-design
-description: Distinctive frontend, UI, and UX design guidance for websites, web apps, dashboards, landing pages, components, visual redesigns, CSS styling, typography, layout, colour palettes, responsive polish, interaction design, usability, accessibility, user flows, information architecture, and anti-template visual direction. Use automatically whenever the user asks to build, redesign, restyle, modernise, polish, improve, or visually implement a frontend UI, UX flow, page, component, site, app, game, dashboard, or design system.
-license: Complete terms in LICENSE.txt
+description: Clean, minimal, functional frontend, UI, and UX design guidance for websites, web apps, dashboards, landing pages, components, custom component systems, visual redesigns, CSS styling, typography, layout, colour palettes, responsive polish, interaction design, usability, accessibility, user flows, information architecture, and non-template user-facing product design. Use automatically whenever the user asks to build, redesign, restyle, modernise, polish, improve, simplify, declutter, or visually implement a frontend UI, UX flow, page, component, site, app, game, dashboard, or design system, especially when the result must use custom components, avoid browser-native looking controls, or avoid looking vibe coded, AI generated, generic, or template-like.
 ---
 
 # Frontend Design
 
-Approach this as the design lead at a small studio known for giving every client a visual identity that could not be mistaken for anyone else's. This client has already rejected proposals that felt templated, and is paying for a distinctive point of view: make deliberate, opinionated choices about palette, typography, and layout that are specific to this brief, and take one real aesthetic risk you can justify.
+Design and build the actual usable experience the user asked for. Prioritise clarity, speed of comprehension, and successful task completion over visual novelty. Treat the brief, existing codebase, and target audience as constraints. Make deliberate choices about layout, type, colour, content, and interaction that are specific to the subject without making the interface feel bloated, complicated, overwhelming, vibe coded, or templated.
 
-## Ground it in the subject
+## Operating Mode
 
-If the brief does not pin down what the product or subject is, pin it yourself before designing: name one concrete subject, its audience, and the page's single job, and state your choice. If there's any information in your memory about the human's preferences, context about what they're building, or designs you've made before – use that as a hint. The subject's own world, its materials, instruments, artifacts, and vernacular, is where distinctive choices come from. Build with the brief's real content and subject matter throughout.
+- Infer a concrete subject, user, and primary job when the brief is vague. Ask only when a wrong assumption would make the work unusable.
+- Follow any existing design system, component library, brand tokens, routing, data model, and interaction pattern before adding new conventions.
+- Prefer a restrained, complete product surface over a decorative mockup. Dashboards and tools should prioritise density, scanning, and repeat use without overcrowding the screen. Games and expressive sites can carry more motion and visual character only when it helps users understand or enjoy the interaction.
+- Use real, searched, provided, or generated bitmap assets when visual assets are needed. Do not rely on generic gradients, abstract blobs, or decorative SVGs as the main visual signal.
+- Keep all design decisions grounded in the product domain, not in trend words.
+- Remove interface elements that do not help users navigate, decide, enter data, understand state, or complete the primary task.
+- Make the user-facing side feel product-native and intentional. Avoid obvious AI defaults: fake metrics, generic SaaS cards, placeholder testimonials, vague feature copy, stock-looking layouts, oversized empty heroes, random gradients, repeated icon tiles, and decorative elements that could belong to any product.
+- Use a consistent custom component system for the user-facing UI. Do not expose raw browser-default controls such as unstyled buttons, selects, date inputs, file inputs, checkboxes, radios, range sliders, dialogs, tooltips, or scrollbars. Native elements may be used underneath for semantics, autofill, mobile keyboards, and form behaviour, but their visible presentation must be custom, consistent, and accessible.
 
-## Design principles
+## Design Process
 
-For web designs, the hero is a thesis. Open with the most characteristic thing in the subject's world, in whatever form makes sense for it: a headline, an image, an animation, a live demo, an interactive moment. Be deliberate with your choice: a big number with a small label, supporting stats, and a gradient accent is the template answer, only use if that's truly the best option.
+1. Establish the design brief: subject, audience, primary task, required screens, existing constraints, and success criteria.
+2. Create a compact design plan before coding:
+   - Palette: 3 to 5 named colours with roles and enough neutral space.
+   - Type: a clear type scale with few roles and readable default sizes.
+   - Components: the reusable primitives needed for controls, forms, overlays, feedback, navigation, and data display.
+   - Layout: grid, hierarchy, responsive behaviour, navigation structure, and what is intentionally omitted.
+   - Signature: at most one memorable visual or interaction idea tied to the subject.
+3. Critique the plan before implementation. Remove clutter first. Revise anything that could fit almost any unrelated brief, especially cream editorial pages, dark neon dashboards, purple-blue gradients, glassmorphism, floating cards, decorative orbs, generic numbered sections, boilerplate hero layouts, and fake dashboards.
+4. Implement the plan exactly, using repository conventions and stable responsive constraints.
+5. Verify the finished UI in realistic desktop and mobile viewports when tools are available. Check screenshots rather than trusting the first render.
 
-Typography carries the personality of the page. Pair the display and body faces deliberately, not the same families you would reach for on any other project, and set a clear type scale with intentional weights, widths, and spacing. Make the type treatment itself a memorable part of the design, not a neutral delivery vehicle for the content.
+## Interface Standards
 
-Structure is information. Structural devices, numbering, eyebrows, dividers, labels, should encode something true about the content, not decorate it. Many generic designs use numbered markers (01 / 02 / 03), but that's only appropriate if the content actually is a sequence - like a real process or a typed timeline where order carries information the reader needs. Question if choices like numbered markers actually make sense before incorporating them.
+- Make the first screen useful. Build the application, dashboard, game, editor, or tool itself unless the user specifically asked for a landing page.
+- Keep the visible choices small and obvious. Prefer one primary action per view, clear secondary actions, and progressive disclosure for advanced controls.
+- Use real domain objects, realistic labels, and meaningful empty or sample states. Do not ship lorem ipsum, filler cards, fake social proof, invented metrics, or generic "powerful insights" copy.
+- Implement familiar controls as custom components: icons for common actions, segmented controls for modes, sliders or steppers for numbers, menus or comboboxes for option sets, tabs for view switching, and toggles or checkboxes for binary choices.
+- Style every component state deliberately: default, hover, focus-visible, active, selected, disabled, loading, invalid, success, empty, and skeleton states where relevant.
+- For custom inputs, selects, comboboxes, menus, dialogs, tooltips, tabs, and toggles, preserve keyboard navigation, focus management, labels, ARIA state, pointer targets, escape and outside-click behaviour, and screen-reader output. Use proven accessible primitives already present in the repo when available.
+- Use cards only for individual repeated items, modals, or genuinely framed tools. Do not nest cards inside cards or style every section as a floating card.
+- Keep text inside its container at all viewports. Add stable widths, aspect ratios, grid tracks, min and max sizes, wrapping, and overflow handling where dynamic content could shift layout.
+- Use accessible names, visible focus states, sufficient contrast, keyboard reachability, reduced motion support, and clear loading, empty, error, disabled, and success states.
+- Do not use visible in-app text to explain the UI design, implementation, keyboard shortcuts, or visual styling unless that text is part of the user-facing product.
 
-Leverage motion deliberately. Think about where and if animation can serve the subject: a page-load sequence, a scroll-triggered reveal, hover micro-interactions, ambient atmosphere. An orchestrated moment usually lands harder than scattered effects; choose what the direction calls for. However, sometimes less is more, and extra animation contributes to the feeling that the design is AI-generated.
+## Copy
 
-Match complexity to the vision. Maximalist directions need elaborate execution; minimal directions need precision in spacing, type, and detail. Elegance is executing the chosen vision well.
+- Write from the end user's side of the screen. Name controls by the action or object users recognise.
+- Use active, specific labels: "Save changes" beats "Submit" when the action saves.
+- Keep terminology consistent across buttons, headings, empty states, toasts, and errors.
+- Treat empty and error states as guidance. Say what happened and what the user can do next.
+- Avoid filler, hype, and vague adjectives unless there is visible evidence in the product.
 
-Consider written content carefully. Often a design brief may not contain real content, and it's up to you to come up with copy. Copy can make a design feel as templated as the design itself. See the below section on writing for more guidance.
+## Implementation Discipline
 
-## Process: brainstorm, explore, plan, critique, build, critique again
+- Match existing framework, styling stack, icon library, state management, data loading, and routing.
+- Reuse existing shared components first. If none exist, create small custom primitives only for components used by the requested UI; do not generate a bloated design system for a narrow task.
+- Keep CSS specificity predictable. Avoid broad selectors that accidentally override component styles.
+- Do not scale font size directly with viewport width. Use a sensible type scale and responsive layout changes instead.
+- Use animation only when it clarifies state, hierarchy, direct manipulation, or the subject's character.
+- Avoid building extra panels, metrics, filters, tabs, charts, onboarding text, empty decoration, or settings unless the user asked for them or the workflow clearly needs them.
+- Before adding a section or component, identify the user decision or action it supports. If it only makes the page look fuller, remove it.
+- For 3D scenes, use Three.js and verify the canvas is nonblank, framed, moving or interactive as intended, and usable on mobile.
 
-For calibration: AI-generated design right now clusters around three looks: (1) a warm cream background (near #F4F1EA) with a high-contrast serif display and a terracotta accent; (2) a near-black background with a single bright acid-green or vermilion accent; (3) a broadsheet-style layout with hairline rules, zero border-radius, and dense newspaper-like columns. All three are legitimate for some briefs, but they are defaults rather than choices, and they appear regardless of subject. Where the brief pins down a visual direction, follow it exactly — the brief's own words always win, including when it asks for one of these looks. Where it leaves an axis free, don't spend that freedom on one of these defaults. Just like a human designer who's hired, there's often a careful balance between doing what you're good at and taking each project as a chance to experiment and learn.
+## Final Verification
 
-Work in two passes. First, brainstorm a short design plan based on the human's design brief: create a compact token system with color, type, layout, and signature. Color: describe the palette as 4–6 named hex values. Type: the typefaces for 2+ roles (a characterful display face that's used with restraint, a complementary body face, and a utility face for captions or data if needed). Layout: a layout concept, using one-sentence prose descriptions and ASCII wireframes to ideate and compare. Signature: the single unique element this page will be remembered by that embodies the brief in an appropriate way.
+Before finalising, check:
 
-Then review that plan against the brief before building: if any part of it reads like the generic default you would produce for any similar page (work through a similar prompt to see if you arrive somewhere similar) rather than a choice made for this specific brief — revise that part, say what you changed and why. Only after you've confirmed the relative uniqueness of your design plan should you start to write the code, following the revised plan exactly and deriving every color and type decision from it.
-
-When writing the code, be careful of structuring your CSS selector specificities. It's easy to generate CSS classes that cancel each other out (especially with a type-based selector like .section and a element-based selector like .cta). This can happen often with paddings/margins between sections.
-
-Try to do a lot of this planning and iteration in your thinking, and only show ideas to the user when you have higher confidence it'll delight them.
-
-## Restraint and self-critique
-
-Spend your boldness in one place. Let the signature element be the one memorable thing, keep everything around it quiet and disciplined, and cut any decoration that does not serve the brief. Not taking a risk can be a risk itself! Build to a quality floor without announcing it: responsive down to mobile, visible keyboard focus, reduced motion respected. Critique your own work as you build, taking screenshots if your environment supports it – a picture is worth 1000 tokens. Consider Chanel's advice: before leaving the house, take a look in the mirror and remove one accessory. Human creators have memory and always try to do something new, so if you have a space to quickly jot down notes about what you've tried, it can help you in future passes.
-
-## More on writing in design
-
-Words appear in a design for one reason: to make it easier to understand, and therefore easier to use. They are design material, not decoration. Bring the same intentionality to copy that you would bring to spacing and color. Before writing anything, ask what the design needs to say, and how it can best be said to help the person navigate the experience.
-
-Write from the end user's side of the screen. Name things by what people control and recognize, never by how the system is built. A person manages notifications, not webhook config. Describe what something does in plain terms rather than selling it. Being specific is always better than being clever.
-
-Use active voice as default. A control should say exactly what happens when it's used: "Save changes," not "Submit." An action keeps the same name through the whole flow, so the button that says "Publish" produces a toast that says "Published." The vocabulary of an interface is the signposting for someone navigating the product. Cohesion and consistency are how people learn their way around.
-
-Treat failure and emptiness as moments for direction, not mood. Explain what went wrong and how to fix it, in the interface's voice rather than a person's. Errors don't apologize, and they are never vague about what happened. An empty screen is an invitation to act.
-
-Keep the register conversational and tuned: plain verbs, sentence case, no filler, with tone matched to the brand and the audience. Let each element do exactly one job. A label labels, an example demonstrates, and nothing quietly does double duty.
+- Desktop and mobile layouts render without overlap or clipped text.
+- Primary workflows are reachable and controls have clear states.
+- The screen has a clear hierarchy and users are not forced to parse competing panels or actions.
+- Nothing visible reads as placeholder, fake, AI generated, or copied from a generic template.
+- Visual assets load and are relevant to the product or subject.
+- The palette does not read as a one-colour theme unless the brief requires it.
+- Console, build, lint, and test checks pass where available.
+- Any unverified behaviour is stated plainly.

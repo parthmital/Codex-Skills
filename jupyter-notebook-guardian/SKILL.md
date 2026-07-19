@@ -1,11 +1,13 @@
 ---
-name: ipynb-guardian
-description: Safely inspect, edit, refactor, validate, clean, diff, execute, repair, or merge Jupyter notebooks. Use automatically whenever work involves .ipynb files, notebook cells, Jupyter Notebook, JupyterLab, Colab notebooks, nbconvert, nbformat, notebook outputs, notebook execution, notebook refactors, or notebook merge conflicts. Prefer Python modules for reusable logic and treat notebooks as thin orchestration and presentation layers.
+name: jupyter-notebook-guardian
+description: Safely inspect, edit, refactor, validate, clean, diff, execute, repair, or merge Jupyter notebooks without corrupting JSON, metadata, outputs, or execution state. Use automatically whenever work involves .ipynb files, notebook cells, Jupyter Notebook, JupyterLab, Colab notebooks, nbconvert, nbformat, notebook outputs, notebook execution, notebook refactors, notebook cleanup, or notebook merge conflicts. Prefer Python modules for reusable logic and treat notebooks as thin orchestration and presentation layers.
 ---
 
-# IPYNB Guardian
+# Jupyter Notebook Guardian
 
 Use this workflow for every `.ipynb` task. The objective is to prevent corrupted JSON, hidden-state bugs, noisy diffs, accidental output loss, wrong-cell edits, and execution-order failures.
+
+Resolve bundled scripts relative to this skill folder before running them from a target repository. In examples below, replace `<doctor>` with the absolute path to `scripts/notebook_doctor.py` inside this skill.
 
 ## Non-negotiable rules
 
@@ -25,8 +27,8 @@ Use this workflow for every `.ipynb` task. The objective is to prevent corrupted
 Run:
 
 ```bash
-python scripts/notebook_doctor.py inspect path/to/notebook.ipynb
-python scripts/notebook_doctor.py validate path/to/notebook.ipynb
+python <doctor> inspect path/to/notebook.ipynb
+python <doctor> validate path/to/notebook.ipynb
 ```
 
 Check:
@@ -44,7 +46,7 @@ Check:
 If validation fails, repair structure before making content changes:
 
 ```bash
-python scripts/notebook_doctor.py repair path/to/notebook.ipynb --backup
+python <doctor> repair path/to/notebook.ipynb --backup
 ```
 
 ## Editing workflow
@@ -60,7 +62,7 @@ python scripts/notebook_doctor.py repair path/to/notebook.ipynb --backup
 Use:
 
 ```bash
-python scripts/notebook_doctor.py diff before.ipynb after.ipynb
+python <doctor> diff before.ipynb after.ipynb
 ```
 
 ### Large refactor
@@ -91,7 +93,7 @@ project/
 Export code for review:
 
 ```bash
-python scripts/notebook_doctor.py export-code notebook.ipynb --output /tmp/notebook_cells.py
+python <doctor> export-code notebook.ipynb --output /tmp/notebook_cells.py
 ```
 
 ## Output policy
@@ -106,7 +108,7 @@ Default behaviour depends on intent:
 Clean safely:
 
 ```bash
-python scripts/notebook_doctor.py clean notebook.ipynb --backup
+python <doctor> clean notebook.ipynb --backup
 ```
 
 This clears cell outputs and execution counts while preserving source, IDs, attachments, and notebook metadata.
@@ -127,7 +129,7 @@ jupyter nbconvert \
 Then validate:
 
 ```bash
-python scripts/notebook_doctor.py validate notebook.executed.ipynb
+python <doctor> validate notebook.executed.ipynb
 ```
 
 Execution requirements:
